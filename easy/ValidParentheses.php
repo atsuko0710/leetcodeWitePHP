@@ -26,25 +26,32 @@
 	$string1 = '((([{}])))';
 	$string2 = '(()[([{}])))';
 	$stack = [];
-	foreach ($string2 as $key => $value) {
-		if (array_search($value, $left)) {  //如果是左括号则入栈
-			$stack[] = $value;
-		}
-		if (array_search($value, $right)) {
-			if (!count($stack)) { // 栈空
-				echo "无效！";die;
-			}
-			$last = end($stack);  //取最后一个数组
-			if ($match[$value] == $last) {  //如果最后一个左括号与该右括号搭配则去掉最后一个
-				array_pop($stack);
-			} else {
-				echo "无效！";die;
-			}
-		}
+	$str = str_split($string1);
 
+	function vaild($str) {
+		global $left,$right,$match;
+		foreach ($str as $key => $value) {
+			if (array_search($value, $left)) {  //如果是左括号则入栈
+				$stack[] = $value;
+			}
+			if (array_search($value, $right)) {
+				if (!count($stack)) {  //栈空则无效
+					return false;
+				}
+				$last = end($stack); // 取栈中最后一个字符
+				if ($match[$value] != $last) {  // 最后一个字符与右括号不匹配
+					return false;
+				} else {
+					array_pop($stack);  // 出栈
+				}
+			}
+		}
+		return true;
 	}
-	echo "有效！";
+	if (vaild($str)) {
+		echo "有效！";
+	} else {
+		echo "无效！";
+	}
 
-	function p($arr) {
-		
-	}
+	
