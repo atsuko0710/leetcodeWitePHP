@@ -50,5 +50,4 @@
 		}
 	}
 
-	$a = twosum2($nums,$target);
-	echo $a;
+	echo twosum2($nums,$target);
